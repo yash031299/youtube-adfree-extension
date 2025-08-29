@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>YouTube Ad-Free Extension – Options</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A free Chrome extension to watch YouTube videos without ads. Remove YouTube ads with one click!"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #181a1b;
+        color: #f9f9f9;
+        font-family: "Segoe UI", Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        width: 100%;
+        background: linear-gradient(90deg, #ff5252 0%, #ffa726 100%);
+        padding: 32px 0 16px 0;
+        text-align: center;
+        color: #fff;
+        box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.16);
+      }
+
+      header h1 {
+        font-size: 2.2em;
+        margin: 0 0 10px 0;
+        letter-spacing: 1px;
+      }
+
+      header p {
+        font-size: 1.12em;
+        margin: 0 0 8px 0;
+      }
+
+      main {
+        width: 100%;
+        max-width: 700px;
+        margin: 24px auto 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      section.card {
+        background: #222;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.13);
+        padding: 28px 24px;
+        margin-bottom: 0;
+        position: relative;
+      }
+
+      .card h2 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.3em;
+        font-weight: 600;
+        color: #ffa726;
+      }
+
+      .settings-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 54px;
+        display: inline-block;
+        height: 28px;
+      }
+
+      .toggle-switch input {
+        display: none;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        background-color: #444;
+        border-radius: 34px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: #ffa726;
+        border-radius: 50%;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: #ff5252;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+
+      .settings-label {
+        font-size: 1.05em;
+        margin-right: 16px;
+      }
+
+      .btn {
+        background: #ffa726;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 18px;
+        font-size: 1em;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn:hover {
+        background: #ff5252;
+      }
+
+      .success-msg {
+        color: #00e676;
+        margin-left: 10px;
+        font-size: 0.95em;
+      }
+
+      /* Future features */
+      .future-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .future-feature {
+        background: #2a2a2a;
+        color: #ffa726;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #444;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+      }
+
+      .future-feature .soon {
+        background: #ff5252;
+        color: #fff;
+        border-radius: 10px;
+        padding: 2px 8px;
+        font-size: 0.85em;
+        margin-left: 5px;
+      }
+
+      /* Developer profile */
+      .profile-card {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background: #222;
+        border-radius: 15px;
+        padding: 20px 18px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.13);
+      }
+
+      .profile-pic {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background: #ffa726;
+        object-fit: cover;
+        border: 3px solid #ff5252;
+        box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .profile-details .name {
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #ffa726;
+      }
+
+      .profile-details .title {
+        font-size: 1em;
+        color: #ff5252;
+      }
+
+      .profile-details .about {
+        font-size: 1em;
+        color: #eee;
+      }
+
+      .profile-details .email {
+        font-size: 0.98em;
+        color: #ffa726;
+      }
+
+      .hire-btn {
+        margin-top: 9px;
+        background: #ff5252;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 7px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .hire-btn:hover {
+        background: #ffa726;
+        color: #fff;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        main {
+          max-width: 98vw;
+        }
+
+        .card,
+        .profile-card {
+          padding: 16px 7px;
+        }
+
+        .profile-details .about {
+          font-size: 0.96em;
+        }
+      }
+
+      /* SEO keywords (hidden) */
+      #seo-keywords {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>YouTube Ad-Free Extension</h1>
+      <p>
+        Watch YouTube videos <b>without ads</b> instantly! <br />
+        <small>Built for fun. More features coming soon 🚀</small>
+      </p>
+    </header>
+    <main>
+      <!-- How it works -->
+      <section class="card">
+        <h2>How does it work?</h2>
+        <p>
+          This extension lets you instantly
+          <b>watch YouTube videos ad-free</b> by smartly tweaking the video URL
+          and redirecting you to a third-party player—no ads, just pure
+          content!<br />
+          <span style="color: #ff5252"
+            >You may lose comments, likes, or some YouTube features, but you get
+            an uninterrupted experience.</span
+          >
+        </p>
+        <p style="font-size: 0.98em; margin-top: 14px">
+          <b>Disclaimer:</b> This is a
+          <span style="color: #ffa726">fun project</span> built for personal use
+          and learning. Not for commercial purposes.
+        </p>
+      </section>
+      <!-- Settings -->
+      <section class="card">
+        <h2>Settings</h2>
+        <div class="settings-group">
+          <label class="settings-label" for="autoRedirectSwitch"
+            >Always redirect to ad-free (skip prompt):</label
+          >
+          <label class="toggle-switch">
+            <input type="checkbox" id="autoRedirectSwitch" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="settings-group">
+          <button class="btn" id="clearListBtn">
+            Clear "Don’t show again" list
+          </button>
+          <span class="success-msg" id="clearSuccessMsg"></span>
+        </div>
+      </section>
+      <!-- Future features -->
+      <section class="card">
+        <h2>🚀 Upcoming Features</h2>
+        <div class="future-list">
+          <div class="future-feature">
+            Download YouTube Video <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Picture-in-Picture Mode <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Dark Mode <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Channel/Keyword Blacklist <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Custom Ad-Free Provider <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Auto-skip Sponsors <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Video Quality Selector <span class="soon">soon</span>
+          </div>
+          <div class="future-feature">
+            Keyboard Shortcuts <span class="soon">soon</span>
+          </div>
+        </div>
+      </section>
+      <!-- Developer profile -->
+      <section class="profile-card">
+        <img
+          class="profile-pic"
+          src="photo.jpg"
+          alt="Yash Vishwakarma Photo"
+        />
+        <div class="profile-details">
+          <div class="name">Yash Vishwakarma</div>
+          <div class="title">Software Development Engineer</div>
+          <div class="about">
+            Building Highly Scalable Systems, Master in Data Structures and
+            Algorithm, Building cool tools that make the web more fun and
+            efficient! Open to new opportunities & collaborations.
+          </div>
+          <div class="email">
+            Email:
+            <a
+              href="mailto:vishwakarmayash24@gmail.com"
+              style="color: #ffa726; text-decoration: underline"
+              >vishwakarmayash24@gmail.com</a
+            >
+          </div>
+          <a class="hire-btn" href="mailto:vishwakarmayash24@gmail.com"
+            >Hire Me! 😄</a
+          >
+        </div>
+      </section>
+      <!-- SEO keywords (hidden from humans; visible to search engines) -->
+      <div id="seo-keywords">
+        ad free youtube, youtube without ads, remove youtube ads, watch youtube
+        without ads, block youtube ads, youtube ad blocker, play youtube videos
+        without ads, adless youtube, watch youtube videos free of ads, free
+        youtube ad blocker, skip youtube ads, youtube no ads extension, youtube
+        ad free video player, avoid youtube ads, chrome extension no ads
+        youtube, youtube video downloader
+      </div>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>

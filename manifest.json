@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Ad-Free Redirector",
+  "version": "1.0",
+  "description": "Redirects YouTube videos to an ad-free alternative site.",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.ico",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
