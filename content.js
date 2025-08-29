@@ -158,10 +158,37 @@ let lastUrl = location.href;
 const observer = new MutationObserver(() => {
     if (location.href !== lastUrl) {
         lastUrl = location.href;
-        setTimeout(handleYouTubeVideoPage, 500); // Wait a bit for YouTube to finish loading new page
+        setTimeout(handleYouTubeVideoPage, 500); // Wait for SPA nav
     }
 });
 observer.observe(document, { subtree: true, childList: true });
 
-// Run initially in case the user landed directly on a video page
-handleYouTubeVideoPage();
+// --- Robust Initial Launcher ---
+function robustInitialLaunch(retries = 15) {
+    // Only try if we're on YouTube watch page and not already handled
+    if (
+        window.location.hostname === 'www.youtube.com' &&
+        window.location.pathname === '/watch' &&
+        !document.getElementById('adfree-banner')
+    ) {
+        handleYouTubeVideoPage();
+        // If still not handled and retries remain, try again after 400ms
+        if (
+            !document.getElementById('adfree-banner') &&
+            retries > 0
+        ) {
+            setTimeout(() => robustInitialLaunch(retries - 1), 400);
+        }
+    }
+}
+
+// Run robust launch after DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    robustInitialLaunch();
+});
+// Also run as a fallback after window load
+window.addEventListener('load', () => {
+    robustInitialLaunch();
+});
+// And as a final fallback, run once immediately
+robustInitialLaunch();
